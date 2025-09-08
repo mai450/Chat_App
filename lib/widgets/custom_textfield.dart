@@ -8,13 +8,17 @@ class CustomTextfield extends StatefulWidget {
       required this.icon,
       required this.onChange,
       this.obscureText = false,
-      this.suffixIcon});
+      this.suffixIcon,
+      this.keyboardType,
+      required this.controller});
 
   final String hintText;
   final IconData icon;
   final bool? obscureText;
   final Function(String)? onChange;
   final Widget? suffixIcon;
+  final TextInputType? keyboardType;
+  final TextEditingController controller;
 
   @override
   State<CustomTextfield> createState() => _CustomTextfieldState();
@@ -24,6 +28,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       onChanged: widget.onChange,
       obscureText: widget.obscureText!,
       validator: (value) {
@@ -31,36 +36,27 @@ class _CustomTextfieldState extends State<CustomTextfield> {
           return 'This felid is required';
         }
       },
+      keyboardType: widget.keyboardType,
       decoration: InputDecoration(
         hintText: widget.hintText,
-        hintStyle: TextStyle(color: kPrimaryColor),
+        hintStyle: TextStyle(color: Colors.grey),
         prefixIcon: Icon(
           widget.icon,
           size: 18,
           color: kPrimaryColor,
         ),
         suffixIcon: widget.suffixIcon,
-        filled: true,
-        fillColor: const Color.fromARGB(255, 236, 236, 236),
-        enabledBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Color.fromARGB(255, 220, 220, 220),
-          ),
-          borderRadius: BorderRadius.circular(25),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Color.fromARGB(255, 220, 220, 220),
-          ),
-          borderRadius: BorderRadius.circular(25),
-        ),
-        border: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Color.fromARGB(255, 220, 220, 220),
-          ),
-          borderRadius: BorderRadius.circular(25),
-        ),
+        enabledBorder: outlineInputBorder(),
+        focusedBorder: outlineInputBorder(),
+        border: outlineInputBorder(),
       ),
+    );
+  }
+
+  OutlineInputBorder outlineInputBorder() {
+    return OutlineInputBorder(
+      borderSide: const BorderSide(color: kPrimaryColor),
+      borderRadius: BorderRadius.circular(25),
     );
   }
 }

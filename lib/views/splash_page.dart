@@ -1,6 +1,5 @@
 import 'package:chat_app/views/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -20,7 +19,7 @@ class _SplashPageState extends State<SplashPage> {
 
   navigateToLoginPage() async {
     await Future.delayed(Duration(seconds: 2));
-    Navigator.pushNamed(context, LoginPage.id);
+    Navigator.pushReplacementNamed(context, LoginPage.id);
   }
 
   @override
@@ -30,13 +29,9 @@ class _SplashPageState extends State<SplashPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SvgPicture.asset(
-              'assets/welcome.svg',
-              height: 150,
-              width: 150,
+            Image.asset(
+              'assets/logo.png',
             ),
-            // const SizedBox(height: 20),
-            // const CircularProgressIndicator(), // Optional: Display a loading indicator
           ],
         ),
       ),

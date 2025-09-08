@@ -1,5 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
 part 'auth_state.dart';
@@ -28,11 +30,16 @@ class AuthCubit extends Cubit<AuthState> {
     emit(LoginObscureText());
   }
 
-  Future<void> registerAuth(String email, String password) async {
+  Future<void> registerAuth(
+    String email,
+    String password,
+  ) async {
     emit(RegisterLoading());
     try {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
       emit(RegisterSuccess());
     } on FirebaseAuthException catch (e) {
@@ -44,5 +51,9 @@ class AuthCubit extends Cubit<AuthState> {
     } on Exception catch (e) {
       emit(RegisterFailure(errMessage: e.toString()));
     }
+  }
+
+  void logoutAuth() async {
+    await FirebaseAuth.instance.signOut();
   }
 }

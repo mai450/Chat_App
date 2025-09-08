@@ -1,10 +1,12 @@
+import 'package:chat_app/constants/const.dart';
 import 'package:chat_app/firebase_options.dart';
 import 'package:chat_app/simple_bloc_observer.dart';
+import 'package:chat_app/views/all_chats_page.dart';
 import 'package:chat_app/views/blocs/bloc/auth_bloc.dart';
-import 'package:chat_app/views/chat_page.dart';
 import 'package:chat_app/views/cubits/auth_cubit/auth_cubit.dart';
-import 'package:chat_app/views/cubits/chat_cubit/chat_cubit.dart';
+import 'package:chat_app/views/group_page.dart';
 import 'package:chat_app/views/login_page.dart';
+import 'package:chat_app/views/one_to_one_chat_page.dart';
 import 'package:chat_app/views/register_page.dart';
 import 'package:chat_app/views/splash_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -23,7 +25,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -32,19 +33,21 @@ class MyApp extends StatelessWidget {
           create: (context) => AuthCubit(),
         ),
         BlocProvider(
-          create: (context) => ChatCubit(),
-        ),
-        BlocProvider(
           create: (context) => AuthBloc(),
         ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+            brightness: Brightness.dark,
+            scaffoldBackgroundColor: kBackgroundColor),
         routes: {
           SplashPage.id: (context) => SplashPage(),
           LoginPage.id: (context) => const LoginPage(),
           RegisterPage.id: (context) => const RegisterPage(),
-          ChatPage.id: (context) => ChatPage(),
+          AllChatsPage.id: (context) => const AllChatsPage(),
+          GroupPage.id: (context) => GroupPage(),
+          OneToOneChatPage.id: (context) => OneToOneChatPage(),
         },
         initialRoute: SplashPage.id,
       ),
